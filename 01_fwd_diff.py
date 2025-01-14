@@ -29,15 +29,25 @@ for i, beta in enumerate(betas):
     var[i] = np.var(x)
 
 # %%
+# do the same in one show using the cumulative alpha
+
+alphas = 1 - betas
+alpha_bar = np.prod(alphas)
+x_prime = np.sqrt(alpha_bar) * x0 + np.sqrt(1 - alpha_bar) * np.random.randn(x0.size)
+
+
+# %%
 # plot the results
 
 bins = np.linspace(-5, 5, 41)
 
-fig, ax = plt.subplots(2, 2, figsize=(8, 8), tight_layout=True)
+fig, ax = plt.subplots(2, 3, figsize=(12, 8), tight_layout=True)
 ax[0, 0].hist(x0, bins=bins, density=True)
 ax[0, 0].set_title("distribution of x0")
 ax[0, 1].hist(x, bins=bins, density=True)
 ax[0, 1].set_title(f"distribution of x_{num_T}")
+ax[0, 2].hist(x_prime, bins=bins, density=True)
+ax[0, 2].set_title(f"distribution of x_{num_T} single shot")
 ax[1, 0].plot(betas)
 ax[1, 0].set_title("beta")
 ax[1, 1].plot(var)
